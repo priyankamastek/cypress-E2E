@@ -1,0 +1,24 @@
+{
+  "name": "cypress-e2e",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/priyankamastek/cypress-E2E#readme",
+  "bugs": {
+    "url": "https://github.com/priyankamastek/cypress-E2E/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/priyankamastek/cypress-E2E.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "cypress": "^16.1.0",
+    "typescript": "^7.0.2"
+  }
+}
