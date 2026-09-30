@@ -15,6 +15,7 @@ export default defineConfig({
 
    // AUT to be tested
     expose: {
-        URL: 'https://naveenautomationlabs.com/opencart/index.php?route=account/register'
+        URL: 'https://naveenautomationlabs.com/opencart/index.php?route=account/register',
+        API_URL: 'https://restful-booker.herokuapp.com'
     }
 });

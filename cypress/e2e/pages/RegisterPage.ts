@@ -60,7 +60,7 @@ export class RegisterPage {
         cy.get(this.weblocators.continue).click()
     }
  
-    // 3. Verification: confirms the registration actually worked.
+    // 3. Verification: confirms the registration actually worked - asserttion
     verifyRegistrationSuccess(expectedText: string): void {
         cy.get(this.weblocators.successHeading).should('have.text', expectedText)
     }

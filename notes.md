@@ -177,8 +177,11 @@ Cypress 16 separates values into two kinds:
 1. Public values, such as URLs or a test email, go in expose and are read with Cypress.expose().
 2. Secrets, such as passwords, tokens and API keys, go in env and are read with cy.env().
 
-
-
+# API Testing
+API: SIMPLE GET requests, POST with a body, and a login token for PUT and DELETE.
+1. apiUrl has to be defined before it's used.
+2. The request has to be inside an it(), which is one test.
+3. The it() has to be inside a describe(), which groups the tests.
 
 
 
