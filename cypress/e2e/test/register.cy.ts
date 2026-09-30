@@ -28,7 +28,7 @@ const registerData: RegisterData = {
     email: 'testuser@example.com',
     telephone: '9876543210',
     password: 'Test@1234',
-    successMessage: 'Your Account Has Been Created!'
+    successMessage: 'Your Account Has Been Not Created!'
 }
 
 const myAccountData: MyAccountData = {
@@ -43,7 +43,7 @@ const myAccountObj = new MyAccountPage()
 
 describe('Register - test automation', () => {
 
-    it('should register a new user, open My Account and log out', () => {
+    it('should register a new user, open My Account and log out', { screenshotOnRunFailure: true }, () => {
 
         // The site rejects an email that is already registered,
         // so we add a timestamp to make it unique on every run.

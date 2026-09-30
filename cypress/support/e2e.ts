@@ -12,6 +12,6 @@
 // You can read more here:
 // https://on.cypress.io/configuration
 // ***********************************************************
-
+// Runs before every test file and loads our custom commands.
 // Import commands.js using ES2015 syntax:
 import './commands'

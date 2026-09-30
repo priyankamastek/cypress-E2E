@@ -1,4 +1,7 @@
 /// <reference types="cypress" />
+
+
+
 // ***********************************************
 // This example commands.ts shows you how to
 // create various custom commands and overwrite
@@ -35,3 +38,25 @@
 //     }
 //   }
 // }
+
+import { LoginPage } from "../e2e/pages/LoginPage";
+
+declare global {
+    namespace Cypress {
+        interface Chainable {
+            login(email: string, password: string): Chainable<void>
+        }
+    }
+}
+ 
+Cypress.Commands.add('login', (email, password) => {
+    const loginObj = new LoginPage()
+ 
+    loginObj.openURL()
+    loginObj.enterEmail(email)
+    loginObj.enterPassword(password)
+    loginObj.clickLogin()
+ 
+    // Make sure login worked before the test continues
+    cy.url().should('include', 'account/account')
+})

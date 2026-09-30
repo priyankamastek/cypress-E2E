@@ -7,7 +7,8 @@ export class MyAccountPage {
         pageHeading: '#content h2',
         contentLinks: '#content a',
         sideMenuLinks: '#column-right a',
-        logoutHeading: '#content h1'
+        logoutHeading: '#content h1',
+        successAlert: '.alert-success'
     }
  
     // 2. Verifications and actions
@@ -20,7 +21,15 @@ export class MyAccountPage {
         // cy.contains finds an element by its visible text
         cy.contains(this.weblocators.contentLinks, linkText).should('be.visible')
     }
+   
+    clickEditAccount(): void {
+        cy.contains(this.weblocators.contentLinks, 'Edit your account information').click()
+    }
  
+    verifySuccessMessage(expectedText: string): void {
+        cy.get(this.weblocators.successAlert).should('contain.text', expectedText)
+    }
+
     clickLogout(): void {
         cy.contains(this.weblocators.sideMenuLinks, 'Logout').click()
     }

@@ -24,7 +24,8 @@ export class RegisterPage {
  
     openURL(): void {
         // Reads the URL from the 'env' section of cypress.config.ts
-        cy.visit('https://naveenautomationlabs.com/opencart/index.php?route=account/register')
+        //cy.visit('https://naveenautomationlabs.com/opencart/index.php?route=account/register')
+        cy.visit(Cypress.expose('URL'))
     }
  
     enterFirstName(firstName: string): void {
@@ -44,8 +45,11 @@ export class RegisterPage {
     }
  
     enterPassword(password: string): void {
-        cy.get(this.weblocators.password).type(password)
-        cy.get(this.weblocators.passwordConfirm).type(password)
+        cy.get(this.weblocators.password).type(password, { log: false })
+        cy.get(this.weblocators.passwordConfirm).type(password, { log: false })
+
+        // Show a masked entry instead, so the step is still visible
+          Cypress.log({ name: 'type', message: '********' })
     }
  
     selectCheckbox(): void {

@@ -95,20 +95,87 @@ http://learn.cypress.io/advanced-cypress-concepts/building-the-right-cypress-com
 ## Analogy: Typically you will create a custom JS function to abstract some functionality to re-use within your application, i.e., utility functions. Cypress commands are the same thing. They allow you to re-use functionality across multiple tests.
 
 ## Example:
-cy.get('[data-test="signup-first-name"]').type("Bob")
-cy.get('[data-test="signup-last-name"]').type("Ross")
-cy.get('[data-test="signup-username"]').type("PainterJoy90")
-cy.get('[data-test="signup-password"]').type("s3cret")
-cy.get('[data-test="signup-confirmPassword"]').type("s3cret")
+cy.visit(Cypress.expose('URL'))
+cy.get('#input-firstname').type('Test')
+cy.get('#input-lastname').type('User')
+cy.get('#input-email').type(email)
+cy.get('#input-telephone').type('9876543210')
+cy.get('#input-password').type('Test@1234')
+cy.get('#input-confirm').type('Test@1234')
+cy.get('input[type="checkbox"]').check()
+cy.get('.btn.btn-primary').click()
 
-You can create your own custom commands by placing them inside of cypress/support/commands.ts.
-Cypress.Commands.add("getBySel", (selector, ...args) => {
-  return cy.get(`[data-test=${selector}]`, ...args)
+### With a custom command, each test writes just one line:
+cy.registerUser('Test', 'User', email, '9876543210', 'Test@1234')
+
+### Step 1: Write the command (cypress/support/commands.ts)
+Cypress.Commands.add('registerUser', (firstName, lastName, email, telephone, password) => {
+    cy.visit(Cypress.expose('URL'))
+    cy.get('#input-firstname').type(firstName)
+    cy.get('#input-lastname').type(lastName)
+    cy.get('#input-email').type(email)
+    cy.get('#input-telephone').type(telephone)
+    cy.get('#input-password').type(password)
+    cy.get('#input-confirm').type(password)
+    cy.get('input[type="checkbox"]').check()
+    cy.get('.btn.btn-primary').click()
 })
 
+### Step 2: Tell TypeScript it exists (same file, at the top)
+Cypress now knows the command, but TypeScript doesn't.
+declare namespace Cypress {
+    interface Chainable {
+        registerUser(firstName: string, lastName: string, email: string,
+                     telephone: string, password: string): Chainable<void>
+    }
+}
+### Step 3: Load the file (cypress/support/e2e.ts)
+import './commands'
+
+Cypress runs e2e.ts before every test. This one line makes it read commands.ts, so the command is ready in every test file.
+
+### Step 4: Use it in a test (cypress/e2e/test/registerCommandTest.cy.ts)
+
+describe('Register with a custom command', () => {
+
+    it('should register a new user', () => {
+        // Unique email, because the site rejects one that's already registered
+        const email: string = `${Date.now()}_testuser@example.com`
+
+        // One line does the whole registration
+        cy.registerUser('Test', 'User', email, '9876543210', 'Test@1234')
+
+        // Check the result
+        cy.get('#content h1').should('have.text', 'Your Account Has Been Created!')
+    })
+})
+
+### The flow in one picture
+registerCommandTest.cy.ts        e2e.ts                commands.ts
+cy.registerUser(...)   ──►   import './commands'  ──►  runs the 9 steps
 
 
+# Customize Test-level Configuration
+For video, enable it per spec file from the command line:
 
+npx cypress run --spec cypress/e2e/test/login.cy.ts --config video=true
+
+For screenshots, set it per test:
+it('should log in', { screenshotOnRunFailure: true }, () => { ... })
+
+For baseUrl, you can use either form:
+Cypress.config('baseUrl', 'https://react-redux.realworld.io/')     // inside the test
+it('...', { baseUrl: 'https://react-redux.realworld.io/' }, () => { ... })   // as test config
+
+# Refer this link - https://docs.cypress.io/api/cypress-api/config
+to understand more about global configurations.
+
+# For Public and Sensitive data
+
+Cypress 16 separates values into two kinds:
+
+1. Public values, such as URLs or a test email, go in expose and are read with Cypress.expose().
+2. Secrets, such as passwords, tokens and API keys, go in env and are read with cy.env().
 
 
 
