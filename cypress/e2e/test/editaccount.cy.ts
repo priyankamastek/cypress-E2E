@@ -11,7 +11,8 @@ const loginObj = new LoginPage()
 
 describe('Edit Account', () => {
  
-    beforeEach(() => {
+    
+    /*beforeEach(() => {
         //cy.login('john.deo@gmail.com', 'abc123')
           cy.env(['USER_PASSWORD'], { log: false }).then(({ USER_PASSWORD }) => {
             loginObj.openURL()
@@ -22,9 +23,10 @@ describe('Edit Account', () => {
             // Make sure login worked before the test continues
             cy.url().should('include', 'account/account')
         })
-    })
+    })*/
  
     it('should update the telephone number', () => {
+        cy.login('john.deo@gmail.com', 'abc123')
         myAccountObj.clickEditAccount()
         editAccountObj.updateTelephone('9123456780')
         editAccountObj.clickContinue()

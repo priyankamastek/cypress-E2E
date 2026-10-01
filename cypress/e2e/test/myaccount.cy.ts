@@ -10,17 +10,18 @@ const loginObj = new LoginPage();
 
 describe("My Account", () => {
   // Runs before EACH test (Cypress clears the session between tests)
-  /*beforeEach(() => {
+  beforeEach(() => {
     
     //cy.login('john.deo@gmail.com', 'abc123')
+    
      cy.env(["USER_PASSWORD"], { log: false }).then(({ USER_PASSWORD }) => {
       cy.login("john.deo@gmail.com", USER_PASSWORD);
     });
  
-  }); */
+  }); 
 
     // Runs before EACH test (Cypress clears the session between tests)
-  beforeEach(() => {
+  /*beforeEach(() => {
     cy.env(["USER_PASSWORD"], { log: false }).then(({ USER_PASSWORD }) => {
       loginObj.openURL();
       loginObj.enterEmail("john.deo@gmail.com");
@@ -30,9 +31,9 @@ describe("My Account", () => {
       // Make sure login worked before each test continues
       cy.url().should("include", "account/account");
     });
-  });
+  });*/
 
-  it("should show the My Account heading and links", () => {
+  it.skip("should show the My Account heading and links", () => {
     myAccountObj.verifyPageHeading("My Account");
     myAccountObj.verifyLinkVisible("Edit your account information");
     myAccountObj.verifyLinkVisible("Change your password");

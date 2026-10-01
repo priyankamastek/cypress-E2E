@@ -95,6 +95,7 @@ http://learn.cypress.io/advanced-cypress-concepts/building-the-right-cypress-com
 ## Analogy: Typically you will create a custom JS function to abstract some functionality to re-use within your application, i.e., utility functions. Cypress commands are the same thing. They allow you to re-use functionality across multiple tests.
 
 ## Example:
+function registerUser(){
 cy.visit(Cypress.expose('URL'))
 cy.get('#input-firstname').type('Test')
 cy.get('#input-lastname').type('User')
@@ -104,6 +105,7 @@ cy.get('#input-password').type('Test@1234')
 cy.get('#input-confirm').type('Test@1234')
 cy.get('input[type="checkbox"]').check()
 cy.get('.btn.btn-primary').click()
+}
 
 ### With a custom command, each test writes just one line:
 cy.registerUser('Test', 'User', email, '9876543210', 'Test@1234')
