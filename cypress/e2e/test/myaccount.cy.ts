@@ -10,11 +10,14 @@ describe("My Account", () => {
   // Runs before EACH test (Cypress clears the session between tests)
   beforeEach(() => {
     //cy.login('john.deo@gmail.com', 'abc123')
+
     cy.env(["USER_PASSWORD"], { log: false }).then(({ USER_PASSWORD }) => {
       cy.login("john.deo@gmail.com", USER_PASSWORD);
     });
   });
 
+  it('Login', () =>{})
+  
   it("should show the My Account heading and links", () => {
     myAccountObj.verifyPageHeading("My Account");
     myAccountObj.verifyLinkVisible("Edit your account information");

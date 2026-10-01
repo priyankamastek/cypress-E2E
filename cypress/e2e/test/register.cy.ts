@@ -3,6 +3,7 @@
 import { MyAccountPage } from "../pages/MyAccountPage";
 import { RegisterPage } from "../pages/RegisterPage";
 
+// Test file : Data  + testcases
 
 // An interface describes the "shape" of our test data.
 // If a field is missing or misspelled, TypeScript shows an error before the test runs.
@@ -21,6 +22,7 @@ interface MyAccountData {
     logoutMessage: string
 }
 
+// testcase : faker  (/person) -> initialize the userdata.json -> use it as fixture
 // Static test data that follows the interfaces above.
 const registerData: RegisterData = {
     firstName: 'Test',
@@ -42,9 +44,9 @@ const registerObj = new RegisterPage()
 const myAccountObj = new MyAccountPage()
 
 describe('Register - test automation', () => {
+    // TODO: Get the data from fixture and initilaize the interfaces: RegisterData and MyAccoutnData within a hook
 
     it('should register a new user, open My Account and log out', { screenshotOnRunFailure: true }, () => {
-
         // The site rejects an email that is already registered,
         // so we add a timestamp to make it unique on every run.
         const uniqueEmail: string = `${Date.now()}_${registerData.email}`
@@ -58,7 +60,7 @@ describe('Register - test automation', () => {
         registerObj.enterPassword(registerData.password)
         registerObj.selectCheckbox()
         registerObj.clickOnContinue()
-        registerObj.verifyRegistrationSuccess(registerData.successMessage)
+        registerObj.verifyRegistrationSuccess('Your Account Has Been Not Created!')
         registerObj.clickContinueOnSuccess()
 
         // Page 2: My Account

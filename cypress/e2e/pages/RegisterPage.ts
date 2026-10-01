@@ -45,11 +45,17 @@ export class RegisterPage {
     }
  
     enterPassword(password: string): void {
-        cy.get(this.weblocators.password).type(password, { log: false })
-        cy.get(this.weblocators.passwordConfirm).type(password, { log: false })
+        cy.get(this.weblocators.password).type(password, { log: false }).then(() =>{
+             // Show a masked entry instead, so the step is still visible
+          Cypress.log({ name: 'type', message: '********' })
+        })
 
+        cy.get(this.weblocators.passwordConfirm).type(password, { log: false }).then(() =>{
         // Show a masked entry instead, so the step is still visible
           Cypress.log({ name: 'type', message: '********' })
+        })
+
+       
     }
  
     selectCheckbox(): void {

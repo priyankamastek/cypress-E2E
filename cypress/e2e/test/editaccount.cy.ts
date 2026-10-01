@@ -12,6 +12,8 @@ describe('Edit Account', () => {
     beforeEach(() => {
         cy.login('john.deo@gmail.com', 'abc123')
     })
+
+    it('Login', () => {})
  
     it('should update the telephone number', () => {
         myAccountObj.clickEditAccount()

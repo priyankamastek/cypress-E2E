@@ -24,7 +24,7 @@ const loginObj = new LoginPage()
 const myAccountObj = new MyAccountPage()
  
 describe('Login', () => {
- 
+      
     it('should log in with valid email and password', () => {
         loginObj.openURL()
         loginObj.enterEmail(validUser.email)

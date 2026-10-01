@@ -11,9 +11,10 @@ export class LoginPage {
 
   // 2. Actions
   openURL(): void {
-    cy.visit(
-      "https://naveenautomationlabs.com/opencart/index.php?route=account/login",
-    );
+   // cy.visit(
+     // "https://naveenautomationlabs.com/opencart/index.php?route=account/login",
+    //);
+    cy.visit(Cypress.expose('LOGIN_URL'))
   }
 
   enterEmail(email: string): void {
