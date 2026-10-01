@@ -189,3 +189,47 @@ API: SIMPLE GET requests, POST with a body, and a login token for PUT and DELETE
 
 Important Youtube links to check:
 1. Command chaining in cypress - https://www.youtube.com/watch?v=WHDvViZazWI
+
+
+# Creating Custom reports in Cypress
+===========================================================
+https://docs.cypress.io/app/tooling/reporters
+
+Setup for Cypress + TypeScript
+
+Install packages:
+
+Shell
+npm install --save-dev \
+mochawesome \
+mochawesome-merge \
+mochawesome-report-generator
+
+
+Configure cypress.config.ts:
+
+import { defineConfig } from "cypress";
+
+export default defineConfig({
+  reporter: "mochawesome",
+  reporterOptions: {
+    reportDir: "cypress/reports",
+    overwrite: false,
+    html: false,
+    json: true
+  }
+});
+
+Add scripts to package.json:
+{
+  "scripts": {
+    "cy:run": "cypress run",
+    "merge-report": "npx mochawesome-merge cypress/reports/*.json -o mochawesome.json",
+    "generate-report": "npx marge mochawesome.json",
+    "test:report": "npm run cy:run && npm run merge-report && npm run generate-report"
+  }
+}
+
+npm run test:report
+Note: Cypress + TypeScript projects generates a single consolidated HTML report after all specs execute
+

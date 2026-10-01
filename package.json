@@ -15,7 +15,8 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test-dashboard": "npx cypress run --record --config projectId=ww6s3n --key c2ba208c-e8ba-4987-a4a7-b23d7849d9ac"
   },
   "devDependencies": {
     "@types/node": "^26.6.3",

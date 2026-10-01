@@ -1,6 +1,7 @@
 import { defineConfig } from "cypress";
 
 export default defineConfig({
+  projectId: 'ww6s3n',
   screenshotOnRunFailure: false,
   video: false,
   // defaultCommandTimeout: 8000,
