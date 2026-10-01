@@ -28,7 +28,7 @@ const registerData: RegisterData = {
     email: 'testuser@example.com',
     telephone: '9876543210',
     password: 'Test@1234',
-    successMessage: 'Your Account Has Been Not Created!'
+    successMessage: 'Your Account Has Been Created!'
 }
 
 const myAccountData: MyAccountData = {
