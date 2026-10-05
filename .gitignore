@@ -1,5 +1,17 @@
+# Dependencies
 node_modules/
+
+# Cypress generated output
 cypress/videos/
 cypress/screenshots/
 cypress/downloads/
+cypress/results/
+cypress/reports/
+
+# Local secrets / environment config
 cypress.env.json
+.env
+
+# OS / editor clutter
+Thumbs.db
+.DS_Store

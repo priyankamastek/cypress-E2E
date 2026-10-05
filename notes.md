@@ -233,3 +233,87 @@ Add scripts to package.json:
 npm run test:report
 Note: Cypress + TypeScript projects generates a single consolidated HTML report after all specs execute
 
+# Jenkins CI Pipeline
+=====================================
+Workflow :
+
+VS Code (Cypress project) → git push → GitHub → Jenkins (polls) → npm ci → cypress run → JUnit + HTML reports
+
+## Step 1: Get the project CI-ready locally
+Jenkins runs Cypress headlessly with no human present. If npx cypress run doesn't pass cleanly on your machine from a fresh install, it won't pass in Jenkins.
+
+npx cypress run
+
+
+## Step 2 : Install the reporters
+Jenkins needs machine-readable results (JUnit XML) for its test trend graphs, and humans want a readable HTML report. cypress-multi-reporters lets you produce both from one run.
+
+npm install --save-dev cypress-multi-reporters mocha-junit-reporter cypress-mochawesome-reporter
+
+## Step 3: Create reporter-config.json in the project root. 
+This configures what each reporter produces and where.
+
+## Step 4: Update cypress.config.js
+1. reporter and reporterOptions route results through reporter-config.json. That produces the JUnit XML Jenkins reads for its test graphs, plus the HTML report.
+
+2. setupNodeEvents now registers the Mochawesome plugin and returns config.
+
+3. 
+screenshotOnRunFailure changed from false to true. In Jenkins nobody watches the browser, so a screenshot of the failing moment is often your only clue. The Mochawesome report embeds it next to the failed test, and Jenkins archives it as an artifact. This would have helped straight away with your register.cy.ts failure.
+
+4. video: false is kept off. Video recording adds noticeable time to each spec, and screenshots cover most debugging needs. Switch it to true later if a failure needs more context than a single frame.
+
+5. retries.runMode: 1 retries a failed test once in headless runs. Our specs hit live public sites (OpenCart demo, Restful Booker on Heroku), which are occasionally slow. 
+
+A single retry stops one-off network hiccups from turning the build red. 
+
+openMode: 0 keeps failures immediate while you're debugging interactively.
+
+## Step 5: Register in support/e2e.ts
+import "cypress-mochawesome-reporter/register";
+import "./commands";
+
+TypeScript won't complain about missing type definitions here, because it's a side-effect-only import.
+
+Run the : npx cypress run --spec cypress/e2e/test/register.cy.ts
+
+This will create reports (html page) and results (.xml) file for failed test
+
+This is done only to test to check cypress-mochawesome-reporter/ working.
+
+## Step 6: Update package.json file (Sceripts section)
+ "scripts": {
+    "test": "cypress run",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "cy:clean": "rimraf cypress/results cypress/reports cypress/screenshots cypress/videos",
+    "test-dashboard": "npx cypress run --record --config projectId=ww6s3n --key c2ba208c-e8ba-4987-a4a7-b23d7849d9ac"
+  },
+
+ - test now runs Cypress instead of the npm placeholder, which exits with an error. npm test is the conventional command people and tools expect.
+ - cy:open and cy:run are short, memorable commands for interactive and headless runs.
+ - cy:clean deletes old results, reports and screenshots before each run, so Jenkins never mixes old results with new ones. The Jenkinsfile's "Clean Old Results" stage calls this, which is why 
+ - rimraf is needed: rm -rf doesn't exist on Windows.
+
+## Step 7: Install rimraf (this is equiavlent to rm -rf)  
+npm install --save-dev rimraf
+
+## Step 8: Create or check .gitignore.
+Generated output and node_modules shouldn't go into Git:
+node_modules/
+cypress/results/
+cypress/reports/
+cypress/screenshots/
+cypress/videos/
+
+## Step 9: Stage 3: Prepare Jenkins (one-time setup)
+
+Install plugins. Go to http://localhost:8085/manage/pluginManager/available and install any of these that are missing:
+| Plugin |Purpose |
+| --- | --- |
+| Pipeline | Runs the Jenkinsfile
+| Git | Checks out from GitHub
+| NodeJS | Makes a specific Node version available to builds
+| JUnit	 | Test result graphs and trends
+| HTML Publisher | Shows the Mochawesome report inside Jenkins
+| Timestamper | Timestamps in console logs

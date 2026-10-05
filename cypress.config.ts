@@ -2,16 +2,29 @@ import { defineConfig } from "cypress";
 
 export default defineConfig({
   projectId: "ww6s3n",
-  screenshotOnRunFailure: false,
+
+  // Reporting: JUnit XML for Jenkins + Mochawesome HTML report
+  reporter: "cypress-multi-reporters",
+  reporterOptions: {
+    configFile: "reporter-config.json",
+  },
+
+
+// Evidence for debugging CI failures
+  screenshotOnRunFailure: true,
   video: false,
+
+  // Retry once in headless runs to absorb flaky network/UI failures
+  retries: {
+    runMode: 1,
+    openMode: 0,
+  },
+
   // defaultCommandTimeout: 8000,
   e2e: {
     setupNodeEvents(on, config) {
-      // implement node event listeners here
-      // AUT to be tested
-      /* env : {
-          URL: 'https://naveenautomationlabs.com/opencart/index.php?route=account/register'
-      }*/
+      require("cypress-mochawesome-reporter/plugin")(on);
+      return config;
     },
   },
 

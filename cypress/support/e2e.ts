@@ -14,4 +14,5 @@
 // ***********************************************************
 // Runs before every test file and loads our custom commands.
 // Import commands.js using ES2015 syntax:
+import 'cypress-mochawesome-reporter/register'
 import './commands'

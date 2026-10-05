@@ -15,12 +15,19 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "cypress run",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "cy:clean": "rimraf cypress/results cypress/reports cypress/screenshots cypress/videos",
     "test-dashboard": "npx cypress run --record --config projectId=ww6s3n --key c2ba208c-e8ba-4987-a4a7-b23d7849d9ac"
   },
   "devDependencies": {
     "@types/node": "^26.6.3",
     "cypress": "^16.1.0",
+    "cypress-mochawesome-reporter": "^5.0.0",
+    "cypress-multi-reporters": "^2.0.5",
+    "mocha-junit-reporter": "^2.2.1",
+    "rimraf": "^6.1.3",
     "typescript": "^7.0.2"
   }
 }
