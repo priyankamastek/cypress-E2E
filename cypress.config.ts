@@ -14,6 +14,11 @@ export default defineConfig({
   screenshotOnRunFailure: true,
   video: false,
 
+   // Longer waits for slow public demo sites
+  defaultCommandTimeout: 10000,   // cy.get, .should, etc. (default 4000)
+  pageLoadTimeout: 90000,         // cy.visit full page load (default 60000)
+  responseTimeout: 60000,         // cy.request, e.g. Heroku cold start (default 30000)
+  
   // Retry once in headless runs to absorb flaky network/UI failures
   retries: {
     runMode: 1,

@@ -11,10 +11,10 @@ export class LoginPage {
 
   // 2. Actions
   openURL(): void {
-   // cy.visit(
-     // "https://naveenautomationlabs.com/opencart/index.php?route=account/login",
-    //);
-    cy.visit(Cypress.expose('LOGIN_URL'))
+    cy.visit(
+      "https://naveenautomationlabs.com/opencart/index.php?route=account/login",
+    );
+    //cy.visit(Cypress.expose('LOGIN_URL'))
   }
 
   enterEmail(email: string): void {
@@ -25,12 +25,12 @@ export class LoginPage {
     //cy.get(this.weblocators.password).type(password, { log: false });
     // Show a masked entry instead, so the step is still visible
     //Cypress.log({ name: "type", message: "********" });
-     cy.get(this.weblocators.password)
-        .type(password, { log: false })   // real password hidden
-        .then(() => {
-            // runs only after typing finishes, so it appears at the right place
-            Cypress.log({ name: 'type', message: '********' })
-        })
+    cy.get(this.weblocators.password)
+      .type(password, { log: false }) // real password hidden
+      .then(() => {
+        // runs only after typing finishes, so it appears at the right place
+        Cypress.log({ name: "type", message: "********" });
+      });
   }
 
   clickLogin(): void {
