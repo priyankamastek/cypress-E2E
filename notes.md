@@ -318,6 +318,7 @@ Install plugins. Go to http://localhost:8085/manage/pluginManager/available and 
 | HTML Publisher | Shows the Mochawesome report inside Jenkins
 | Timestamper | Timestamps in console logs
 
+
 ## Step 10: Adding NodeJs 24 in Tools
 - http://localhost:8085
 - Jenkins > Manage Jenkins > Tools
@@ -326,10 +327,11 @@ Install plugins. Go to http://localhost:8085/manage/pluginManager/available and 
 - Tick : install automatically
 - select : node24.18.0  or any version of node js that you have installed on local system for cypress
 
+## Step 11: Configure credentials 
 
-## Step 11: Add Jenkinsfile in the project root.
+## Step 12: Add Jenkinsfile in the project root.
 
-## Step 12: 
+## Step 13: 
 Create the Pipeline job
 
 Before starting, confirm two things:

@@ -30,7 +30,7 @@ const registerData: RegisterData = {
     email: 'testuser@example.com',
     telephone: '9876543210',
     password: 'Test@1234',
-    successMessage: 'Your Account Has Been Not Created!'
+    successMessage: 'Your Account Has Been Created!'
 }
 
 const myAccountData: MyAccountData = {
@@ -60,7 +60,7 @@ describe('Register - test automation', () => {
         registerObj.enterPassword(registerData.password)
         registerObj.selectCheckbox()
         registerObj.clickOnContinue()
-        registerObj.verifyRegistrationSuccess('Your Account Has Been Not Created!')
+        registerObj.verifyRegistrationSuccess('Your Account Has Been Created!')
         registerObj.clickContinueOnSuccess()
 
         // Page 2: My Account
