@@ -59,8 +59,10 @@ pipeline {
         }
 
         stage('Run Cypress Tests') {
-            steps {
-                bat "npx cypress run --browser ${params.BROWSER} --spec \"${params.SPEC}\""
+           steps {
+              withCredentials([string(credentialsId: 'cypress-user-password', variable: 'CYPRESS_USER_PASSWORD')]) {
+                 bat "npx cypress run --browser ${params.BROWSER} --spec \"${params.SPEC}\""
+                 }
             }
         }
     }

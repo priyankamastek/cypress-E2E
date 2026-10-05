@@ -317,3 +317,37 @@ Install plugins. Go to http://localhost:8085/manage/pluginManager/available and 
 | JUnit	 | Test result graphs and trends
 | HTML Publisher | Shows the Mochawesome report inside Jenkins
 | Timestamper | Timestamps in console logs
+
+## Step 10: Adding NodeJs 24 in Tools
+- http://localhost:8085
+- Jenkins > Manage Jenkins > Tools
+- Under NodeJS Installation
+- name: node24
+- Tick : install automatically
+- select : node24.18.0  or any version of node js that you have installed on local system for cypress
+
+
+## Step 11: Add Jenkinsfile in the project root.
+
+## Step 12: 
+Create the Pipeline job
+
+Before starting, confirm two things:
+
+Your Jenkinsfile with nodejs 'node24' is pushed to the main branch. Check that it's visible on GitHub.
+The folder C:\jenkins\cypress-cache exists.
+
+Then:
+
+Open http://localhost:8085 and click New Item.
+Enter the name cypress-e2e-pipeline, select Pipeline, and click OK.
+Optionally, in the General section, add a description such as Cypress E2E and API tests for cypress-E2E repo.
+Scroll down to the Pipeline section and set:
+Definition: Pipeline script from SCM
+SCM: Git
+Repository URL: https://github.com/priyankamastek/cypress-E2E.git
+Credentials: leave as - none -
+Branch Specifier: */main  or in my case (jenkins-ci-feature)
+Script Path: Jenkinsfile
+Click Save.
+
